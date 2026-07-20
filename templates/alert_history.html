@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('dashboard') }}" class="inline-flex items-center text-sm text-gray-400 hover:text-amber-400 mb-4">
+    ← Back to Dashboard
+</a>
+<h2 class="text-xl font-bold mb-6">Alert History <span class="text-sm text-gray-400 font-normal">(last 7 days)</span></h2>
+
+<div class="bg-gray-800 rounded-lg p-6 mb-6">
+    <h3 class="text-sm text-gray-400 mb-4">Daily Alerts by Severity</h3>
+    <div class="h-64">
+        <canvas id="trendChart"></canvas>
+    </div>
+</div>
+
+<div class="bg-gray-800 rounded-lg p-6">
+    <h3 class="text-sm text-gray-400 mb-4">Alerts by Zone</h3>
+    <div class="h-64">
+        <canvas id="zoneChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/alert_history.js') }}"></script>
+{% endblock %}

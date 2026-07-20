@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('users.list_users') }}" class="inline-flex items-center text-sm text-gray-400 hover:text-amber-400 mb-4">
+    ← Back to Users
+</a>
+
+<div class="max-w-md bg-gray-800 rounded-lg p-6">
+    <h2 class="text-lg font-bold mb-4">Add User</h2>
+
+    {% for message in get_flashed_messages() %}
+        <p class="text-red-400 text-sm mb-3">{{ message }}</p>
+    {% endfor %}
+
+    <form method="POST">
+        <label class="block text-sm text-gray-400 mb-1">Username</label>
+        <input type="text" name="username" required class="w-full mb-3 p-2 rounded bg-gray-700 text-white">
+
+        <label class="block text-sm text-gray-400 mb-1">Password</label>
+        <input type="password" name="password" required class="w-full mb-3 p-2 rounded bg-gray-700 text-white">
+
+        <label class="block text-sm text-gray-400 mb-1">Role</label>
+        <select name="role" class="w-full mb-4 p-2 rounded bg-gray-700 text-white">
+            <option value="supervisor">Supervisor</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 p-2 rounded">Create User</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-8">
+    <div>
+        <h1 class="text-3xl font-bold">Live Zone Monitoring</h1>
+        <p class="text-gray-500 text-sm mt-1">Auto-refreshing every 5 seconds</p>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-gray-500">
+        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+        Live
+    </div>
+</div>
+
+<div id="zones-container" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    {% for zone in zones %}
+    <div id="zone-{{ zone.id }}" class="bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-gray-700 transition-colors">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold">{{ zone.name }}</h2>
+            <span class="zone-status-dot w-2.5 h-2.5 rounded-full bg-gray-600"></span>
+        </div>
+        <div class="reading-data mb-4">
+            <div class="flex justify-center items-center h-16 text-gray-600 text-sm">Loading...</div>
+        </div>
+        <div class="border-t border-gray-800 pt-3 mb-3">
+            <p class="text-xs uppercase tracking-wide text-gray-600 mb-2">Workers</p>
+            <div class="workers-list text-sm space-y-1"></div>
+        </div>
+        <div class="border-t border-gray-800 pt-3 mb-3">
+            <p class="text-xs uppercase tracking-wide text-gray-600 mb-2">Alerts</p>
+            <div class="alerts-list text-sm space-y-1"></div>
+        </div>
+        <div class="border-t border-gray-800 pt-3">
+            <p class="text-xs uppercase tracking-wide text-gray-600 mb-2">ML Anomaly Detection</p>
+            <div class="flex items-center justify-between mb-1">
+                <span class="ml-badge text-xs px-2 py-1 rounded bg-gray-700 text-gray-400">—</span>
+                <span class="ml-score text-xs text-gray-500"></span>
+            </div>
+            <p class="ml-explainer text-xs text-gray-600"></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

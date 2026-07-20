@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('dashboard') }}" class="inline-flex items-center text-sm text-gray-400 hover:text-amber-400 mb-4">
+    ← Back to Dashboard
+</a>
+
+<div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-bold">Manage Users</h2>
+    <a href="{{ url_for('users.add_user') }}" class="bg-amber-600 hover:bg-amber-700 px-4 py-2 rounded">+ Add User</a>
+</div>
+
+<div class="overflow-x-auto">
+<table class="w-full bg-gray-800 rounded-lg overflow-hidden">
+    <thead class="bg-gray-700 text-left text-sm text-gray-400">
+        <tr><th class="p-3">Username</th><th class="p-3">Role</th><th class="p-3"></th></tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr class="border-t border-gray-700">
+            <td class="p-3">{{ user.username }}</td>
+            <td class="p-3">
+                <span class="px-2 py-1 rounded text-xs {% if user.role == 'admin' %}bg-amber-900 text-amber-300{% else %}bg-teal-900 text-teal-300{% endif %}">
+                    {{ user.role }}
+                </span>
+            </td>
+            <td class="p-3 text-right">
+                {% if user.id != session.get('user_id') %}
+                <form method="POST" action="{{ url_for('users.delete_user', user_id=user.id) }}" class="inline" onsubmit="return confirm('Remove {{ user.username }}?')">
+                    <button type="submit" class="text-red-400 hover:underline text-sm">Delete</button>
+                </form>
+                {% else %}
+                <span class="text-gray-600 text-xs">(you)</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('workers.list_workers') }}" class="inline-flex items-center text-sm text-gray-400 hover:text-amber-400 mb-4">
+    ← Back to Workers
+</a>
+<div class="max-w-md bg-gray-800 rounded-lg p-6">
+    <h2 class="text-lg font-bold mb-4">{{ 'Edit' if worker else 'Add' }} Worker</h2>
+    <form method="POST">
+        <label class="block text-sm text-gray-400 mb-1">Name</label>
+        <input type="text" name="name" value="{{ worker.name if worker else '' }}" required
+               class="w-full mb-3 p-2 rounded bg-gray-700 text-white">
+
+        <label class="block text-sm text-gray-400 mb-1">Zone</label>
+        <select name="zone_id" class="w-full mb-3 p-2 rounded bg-gray-700 text-white">
+            {% for zone in zones %}
+            <option value="{{ zone.id }}" {% if worker and worker.zone_id == zone.id %}selected{% endif %}>{{ zone.name }}</option>
+            {% endfor %}
+        </select>
+
+        {% if worker %}
+        <label class="flex items-center gap-2 mb-4 text-sm text-gray-400">
+            <input type="checkbox" name="offline" {% if worker.status == 'offline' %}checked{% endif %}>
+            Mark offline (connectivity — separate from safe/alert/evacuated)
+        </label>
+        {% endif %}
+
+        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 p-2 rounded">
+            {{ 'Save Changes' if worker else 'Add Worker' }}
+        </button>
+    </form>
+</div>
+{% endblock %}
